@@ -1,4 +1,81 @@
-Öğrenci No:
-AD-SOYAD:
+Öğrenci No:250541003
+AD-SOYAD:MELİKE KEKE
 
-Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:
+Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:ALGORITMA LegoSekilYap
+
+  // --- Giriş: Hedef şekil belirlenir ---
+  GİRİŞ: hedefSekil // Örn: "Ev", "Araba", "Kule", "Robot"
+
+  // --- Gerekli parçalar ve talimatları yükle ---
+  parçalarListesi ← ParcaListesiniYukle(hedefSekil)
+  montajAdimlari ← MontajTalimatlariniYukle(hedefSekil)
+
+  // --- Tüm parçalar hazır mı kontrol et ---
+  EĞER ParcalarEksiksizMi(parçalarListesi) DEĞİLSE
+    YAZDIR "Gerekli tüm LEGO parçaları mevcut değil. Şekil yapılamaz."
+    DUR
+  SON
+
+  YAZDIR hedefSekil, "şekli yapılmaya başlanıyor..."
+
+  // --- Montaj adımlarını sırayla uygula ---
+  FOR herAdim IN montajAdimlari
+    parca ← herAdim.parca
+    konum ← herAdim.konum
+    yon ← herAdim.yon
+
+    EĞER ParcaUygunMu(parca, konum, yon) İSE
+      ParcayiYerlestir(parca, konum, yon)
+      YAZDIR parca, "parçası", konum, "konumuna yerleştirildi."
+    DEĞİLSE
+      YAZDIR "Hata: ", parca, "parçası", konum, "konumuna yerleştirilemedi."
+      DUR
+    SON
+  SON
+
+  // --- Şekil tamamlandı mı kontrol et ---
+  EĞER SekilDogruMu(hedefSekil) İSE
+    YAZDIR "✅ ", hedefSekil, "başarıyla tamamlandı!"
+  DEĞİLSE
+    YAZDIR "❌ Yapı eksik veya hatalı."
+  SON
+
+SON ALGORITMA
+
+
+// --- Yardımcı Fonksiyonlar ---
+
+FONKSIYON ParcaListesiniYukle(sekil)
+  // Şekle göre gerekli parça listesini döner
+  GERİ DÖN şekilVeritabanı[sekil].parcalar
+SON
+
+FONKSIYON MontajTalimatlariniYukle(sekil)
+  // Şekle göre adım adım montaj talimatlarını döner
+  GERİ DÖN şekilVeritabanı[sekil].adimlar
+SON
+
+FONKSIYON ParcalarEksiksizMi(parcaListesi)
+  FOR parca IN parcaListesi
+    EĞER parca.stoktaYok İSE
+      GERİ DÖN FALSE
+    SON
+  SON
+  GERİ DÖN TRUE
+SON
+
+FONKSIYON ParcaUygunMu(parca, konum, yon)
+  // Parçanın belirtilen konuma ve yöne uygunluğunu kontrol eder
+  GERİ DÖN UygunlukKontrol(parca, konum, yon)
+SON
+
+FONKSIYON ParcayiYerlestir(parca, konum, yon)
+  // Parçayı fiziksel veya sanal olarak belirtilen yere yerleştirir
+  yapıHaritası[konum] ← (parca, yon)
+SON
+
+FONKSIYON SekilDogruMu(hedefSekil)
+  // Tüm parçaların doğru yerde olup olmadığını kontrol eder
+  GERİ DÖN YapisalKontrol(hedefSekil, yapıHaritası)
+SON
+
