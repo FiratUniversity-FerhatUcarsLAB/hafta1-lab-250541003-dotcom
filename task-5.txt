@@ -1,4 +1,96 @@
-Öğrenci No:
-AD-SOYAD:
+Öğrenci No:250541003
+AD-SOYAD:MELİKE KEKE
 
-Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:
+Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:ALGORITMA OtobusSeferiDuzenlemeSistemi
+
+  // --- GİRİŞ VERİLERİ ---
+  GİRİŞ:
+    toplamOgrenciSayisi ← KULLANICIDAN_AL("Toplam öğrenci sayısını giriniz: ")
+    otobusKapasitesi ← KULLANICIDAN_AL("Bir otobüsün taşıyabileceği maksimum öğrenci sayısını giriniz: ")
+    yogunSaatler ← Liste["07:00-08:00", "08:00-09:00"] // Tanımlı yoğun saat aralıkları
+    seferBaslangicSaati ← "07:00"
+    seferBitisSaati ← "09:00"
+    zamanDilimiDakika ← 15 // Her 15 dakikada bir sefer planlanabilir
+
+  // --- HESAPLAMALAR ---
+  toplamSeferSayisi ← TAVAN(toplamOgrenciSayisi / otobusKapasitesi)
+  toplamZamanDakika ← SaatFarkiDakika(seferBaslangicSaati, seferBitisSaati)
+  maksimumSeferAdedi ← toplamZamanDakika / zamanDilimiDakika
+
+  EĞER toplamSeferSayisi > maksimumSeferAdedi İSE
+    YAZDIR "⚠️ Uyarı: Yeterli zaman aralığı yok! Daha fazla otobüs tahsis edilmeli veya kapasite artırılmalı."
+    DUR
+  SON
+
+  // --- SEFER PLANLAMASI ---
+  YAZDIR "🚌 Otobüs Sefer Planı:"
+
+  seferListesi ← Boş Liste
+  ogrenciKalan ← toplamOgrenciSayisi
+  mevcutSaat ← seferBaslangicSaati
+
+  WHILE ogrenciKalan > 0 VE mevcutSaat < seferBitisSaati
+    EĞER ogrenciKalan ≥ otobusKapasitesi İSE
+      tasinacak ← otobusKapasitesi
+    DEĞİLSE
+      tasinacak ← ogrenciKalan
+    SON
+
+    sefer ← {
+      "saat": mevcutSaat,
+      "tasiyacakOgrenci": tasinacak
+    }
+    seferListesi.EKLE(sefer)
+
+    YAZDIR "- Sefer saati:", mevcutSaat, "→ Taşınacak öğrenci:", tasinacak
+
+    ogrenciKalan ← ogrenciKalan - tasinacak
+    mevcutSaat ← SaatEkleDakika(mevcutSaat, zamanDilimiDakika)
+  SON
+
+  // --- YOĞUNLUK ANALİZİ VE EKSTRA SEFER ---
+  YAZDIR "🔍 Yoğun saatler için ek sefer kontrolü..."
+
+  FOR saatAraligi IN yogunSaatler
+    EĞER YogunlukFazlaMi(saatAraligi, seferListesi, otobusKapasitesi) İSE
+      YAZDIR "⚠️ Yoğunluk tespit edildi saat aralığı:", saatAraligi
+      YAZDIR "Ek otobüs/ek sefer önerilir."
+    SON
+  SON
+
+  YAZDIR "✅ Sefer planlaması tamamlandı."
+
+SON ALGORITMA
+
+
+// --- YARDIMCI FONKSIYONLAR ---
+
+FONKSIYON SaatFarkiDakika(saat1, saat2)
+  // İki saat arasındaki farkı dakika olarak döner
+  // Örn: SaatFarkiDakika("07:00", "09:00") → 120
+  ...
+SON
+
+FONKSIYON SaatEkleDakika(saat, dakika)
+  // Bir saate belirli dakika ekleyip yeni saati string olarak döner
+  ...
+SON
+
+FONKSIYON YogunlukFazlaMi(saatAraligi, seferListesi, kapasite)
+  // Belirtilen saat aralığında yetersiz kapasite olup olmadığını kontrol eder
+  toplamTasiyacak ← 0
+  FOR sefer IN seferListesi
+    EĞER sefer.saat ∈ saatAraligi İSE
+      toplamTasiyacak ← toplamTasiyacak + sefer.tasiyacakOgrenci
+    SON
+  SON
+
+  gerekli ← TahminiOgrenciSayisi(saatAraligi)
+  GERİ DÖN toplamTasiyacak < gerekli
+SON
+
+FONKSIYON TahminiOgrenciSayisi(saatAraligi)
+  // Örnek varsayım: Öğrencilerin %70’i yoğun saatlerde gelir
+  GERİ DÖN toplamOgrenciSayisi * 0.7 / UZUNLUK(yogunSaatler)
+SON
+
