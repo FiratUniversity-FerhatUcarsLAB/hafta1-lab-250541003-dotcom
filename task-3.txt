@@ -1,4 +1,122 @@
-Öğrenci No:
-AD-SOYAD:
+Öğrenci No:250541003
+AD-SOYAD:MELİKE KEKE
 
-Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:
+Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:ALGORITMA KitapAramaSistemi
+
+  // --- Kitap veri yapısını tanımla ---
+  YAPI Kitap
+    kitapAdi: Metin
+    yazarAdi: Metin
+    ISBN: Metin
+    yayinevi: Metin
+    yil: Tamsayi
+  SON
+
+  // --- Kitapları saklamak için kitapListesi dizisi ---
+  TANIMLA kitapListesi: Dizi[Kitap]
+
+  // --- Örnek kitapları listeye ekle (başlangıç verisi) ---
+  PROSEDÜR KitaplariYukle()
+    kitap1 ← Kitap("Sefiller", "Victor Hugo", "9789750738603", "Can Yayınları", 1862)
+    kitap2 ← Kitap("Suç ve Ceza", "Fyodor Dostoyevski", "9786053608814", "İş Bankası", 1866)
+    kitap3 ← Kitap("1984", "George Orwell", "9780451524935", "Penguin", 1949)
+    kitapListesi ← [kitap1, kitap2, kitap3]
+  SON
+
+  // --- Arama menüsü ---
+  PROSEDÜR AramaMenusu()
+    YAZDIR "📚 KÜTÜPHANE KİTAP ARAMA SİSTEMİ"
+    YAZDIR "1. Kitap adına göre ara"
+    YAZDIR "2. Yazara göre ara"
+    YAZDIR "3. ISBN numarasına göre ara"
+    YAZDIR "4. Çıkış"
+    SECIM ← KULLANICIDAN_AL("Seçiminizi giriniz (1-4): ")
+
+    EĞER SECIM = 1 İSE
+      kitapAdi ← KULLANICIDAN_AL("Kitap adını giriniz: ")
+      Ara_Kitap_Adi(kitapAdi)
+
+    DEĞİLSE_EĞER SECIM = 2 İSE
+      yazar ← KULLANICIDAN_AL("Yazar adını giriniz: ")
+      Ara_Yazar(yazar)
+
+    DEĞİLSE_EĞER SECIM = 3 İSE
+      isbn ← KULLANICIDAN_AL("ISBN numarasını giriniz: ")
+      Ara_ISBN(isbn)
+
+    DEĞİLSE_EĞER SECIM = 4 İSE
+      YAZDIR "Çıkış yapılıyor..."
+      DUR
+
+    DEĞİLSE
+      YAZDIR "Geçersiz seçim. Tekrar deneyin."
+    SON
+
+    // Menüye dön
+    AramaMenusu()
+
+  SON
+
+  // --- Kitap adına göre arama fonksiyonu ---
+  PROSEDÜR Ara_Kitap_Adi(kitapAdi)
+    bulunan ← FALSE
+    FOR kitap IN kitapListesi
+      EĞER kitap.kitapAdi TO_LOWERCASE İÇERİR kitapAdi TO_LOWERCASE İSE
+        YAZDIR "Kitap bulundu:"
+        KitapYazdir(kitap)
+        bulunan ← TRUE
+      SON
+    SON
+    EĞER bulunan = FALSE İSE
+      YAZDIR "Kitap bulunamadı."
+    SON
+  SON
+
+  // --- Yazara göre arama fonksiyonu ---
+  PROSEDÜR Ara_Yazar(yazar)
+    bulunan ← FALSE
+    FOR kitap IN kitapListesi
+      EĞER kitap.yazarAdi TO_LOWERCASE İÇERİR yazar TO_LOWERCASE İSE
+        YAZDIR "Kitap bulundu:"
+        KitapYazdir(kitap)
+        bulunan ← TRUE
+      SON
+    SON
+    EĞER bulunan = FALSE İSE
+      YAZDIR "Kitap bulunamadı."
+    SON
+  SON
+
+  // --- ISBN'e göre arama fonksiyonu ---
+  PROSEDÜR Ara_ISBN(isbn)
+    bulunan ← FALSE
+    FOR kitap IN kitapListesi
+      EĞER kitap.ISBN = isbn İSE
+        YAZDIR "Kitap bulundu:"
+        KitapYazdir(kitap)
+        bulunan ← TRUE
+      SON
+    SON
+    EĞER bulunan = FALSE İSE
+      YAZDIR "Kitap bulunamadı."
+    SON
+  SON
+
+  // --- Kitap bilgilerini yazdırma fonksiyonu ---
+  PROSEDÜR KitapYazdir(kitap)
+    YAZDIR "--------------------------"
+    YAZDIR "Adı       : ", kitap.kitapAdi
+    YAZDIR "Yazar     : ", kitap.yazarAdi
+    YAZDIR "ISBN      : ", kitap.ISBN
+    YAZDIR "Yayınevi  : ", kitap.yayinevi
+    YAZDIR "Basım Yılı: ", kitap.yil
+    YAZDIR "--------------------------"
+  SON
+
+// Ana Program
+BAŞLAT
+  KitaplariYukle()
+  AramaMenusu()
+BİTİR
+
+
