@@ -1,4 +1,95 @@
-Öğrenci No:
-AD-SOYAD:
+Öğrenci No:250541003
+AD-SOYAD:MELİKE KEKE
 
-Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:
+Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:ALGORITMA SudokuCoz
+
+  // Sudoku 9x9'luk bir matris olsun
+  GİRİŞ: sudoku[9][9] // 0 olan hücreler boştur
+  ÇIKIŞ: Çözülmüş sudoku matrisi veya "Çözüm bulunamadı"
+
+  FONKSIYON SudokuCoz(sudoku)
+  
+    EĞER TümHucrelerDoluMu(sudoku) İSE
+      GERİ DÖN TRUE // Sudoku çözülmüş
+    SON
+
+    // Bir sonraki boş hücreyi bul
+    (satir, sutun) ← BosHucreBul(sudoku)
+
+    // 1'den 9'a kadar olan sayıları sırayla dene
+    FOR sayi ← 1 TO 9
+      EĞER GecerliMi(sudoku, satir, sutun, sayi) İSE
+        sudoku[satir][sutun] ← sayi
+
+        // Bir sonraki adıma geç (rekürsif çağrı)
+        EĞER SudokuCoz(sudoku) İSE
+          GERİ DÖN TRUE
+        SON
+
+        // Eğer olmadıysa geri al (backtrack)
+        sudoku[satir][sutun] ← 0
+      SON
+    SON
+
+    // Hiçbir sayı işe yaramadıysa geri dön
+    GERİ DÖN FALSE
+
+  SON FONKSIYON
+
+  // Yardımcı Fonksiyon: Boş hücre bul
+  FONKSIYON BosHucreBul(sudoku)
+    FOR i ← 0 TO 8
+      FOR j ← 0 TO 8
+        EĞER sudoku[i][j] = 0 İSE
+          GERİ DÖN (i, j)
+        SON
+      SON
+    SON
+    GERİ DÖN NULL // Boş hücre yok
+  SON FONKSIYON
+
+  // Yardımcı Fonksiyon: Hücreye sayı yazmak geçerli mi?
+  FONKSIYON GecerliMi(sudoku, satir, sutun, sayi)
+
+    // Satırda var mı?
+    FOR i ← 0 TO 8
+      EĞER sudoku[satir][i] = sayi İSE
+        GERİ DÖN FALSE
+      SON
+    SON
+
+    // Sütunda var mı?
+    FOR i ← 0 TO 8
+      EĞER sudoku[i][sutun] = sayi İSE
+        GERİ DÖN FALSE
+      SON
+    SON
+
+    // 3x3 kutuda var mı?
+    basSatir ← (satir / 3) * 3
+    basSutun ← (sutun / 3) * 3
+
+    FOR i ← 0 TO 2
+      FOR j ← 0 TO 2
+        EĞER sudoku[basSatir + i][basSutun + j] = sayi İSE
+          GERİ DÖN FALSE
+        SON
+      SON
+    SON
+
+    GERİ DÖN TRUE
+
+  SON FONKSIYON
+
+// Ana Program
+BAŞLAT
+  sudoku ← 9x9 matris (0'lar boş hücreleri temsil eder)
+
+  EĞER SudokuCoz(sudoku) İSE
+    SudokuYazdir(sudoku)
+  DEĞİLSE
+    YAZDIR "Çözüm bulunamadı."
+  SON
+BİTİR
+
+
