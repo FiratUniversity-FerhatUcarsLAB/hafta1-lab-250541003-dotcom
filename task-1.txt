@@ -1,4 +1,54 @@
-Öğrenci No:
-AD-SOYAD:
+Öğrenci No:250541003
+AD-SOYAD:MELİKE KEKE
 
-Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:
+Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:ALGORITMA MükemmelOmletYap
+
+  // --- Malzemeleri Hazırla ---
+  GEREKEN_MALZEMELERI_TANIMLA
+    yumurta_sayisi ← 3
+    süt_miktari ← 30 ml
+    tuz_miktari ← 1 tutam
+    karabiber_miktari ← 1 tutam
+    tereyağ_miktari ← 1 yemek kaşığı
+    istege_bagli_malzemeler ← ["peynir", "maydanoz", "mantar", "biber"]
+
+  // --- Araçları Hazırla ---
+  GEREKEN_ARACLARI_TANIMLA
+    tava ← temiz
+    çırpma_kabı ← boş
+    çatal_veya_tel_cırpıcı ← temiz
+    spatula ← hazır
+
+  // --- Yumurta Karışımını Hazırla ---
+  yumurtaları_kır_ve_çırpma_kabına_ekle(yumurta_sayisi)
+  süt_ekle(süt_miktari)
+  tuz_ekle(tuz_miktari)
+  karabiber_ekle(karabiber_miktari)
+  istege_bagli_malzemeleri_ekle(istege_bagli_malzemeler)
+  iyice_çırp(kabın_içeriği)
+
+  // --- Tava ve Pişirme ---
+  ocağı_aç(orta_ısı)
+  tereyağını_tavaya_ekle(tereyağ_miktari)
+  tereyağı_eriyene_kadar_bekle
+
+  // --- Karışımı Dök ve Pişir ---
+  karışımı_tavaya_dök
+  pişirirken_spatulayla_kenarlardan_ortaya_it
+  omlet_yavaşça_kıvam_alana_kadar_pişir
+
+  // --- Omleti Katla ve Servis Et ---
+  omletin_kenarları_pişti_mi?
+    EVETSE:
+      isteğe_göre_ortaya_peynir_ekle
+      omleti_ortadan_katla
+      30_saniye_daha_pişir
+
+  ocağı_kapat
+  omleti_tabağa_al
+  isteğe_göre_süsle(maydanoz vb.)
+
+  SERVİS_ET
+
+SON
+
